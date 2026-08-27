@@ -1,0 +1,43 @@
+<div class="panel-split">
+  <div class="panel-list">
+    <p-table [value]="traces" [loading]="loading" [rowHover]="true">
+      <ng-template pTemplate="header">
+        <tr>
+          <th>Start</th>
+          <th>Root span</th>
+          <th>Duration</th>
+          <th>Spans</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-row>
+        <tr (click)="selectTrace(row.traceId)" [class.active]="row.traceId === activeTraceId">
+          <td>{{ fmtTime(row.startTime) }}</td>
+          <td>{{ row.rootName }}<span *ngIf="row.hasError"> &#9888;</span></td>
+          <td>{{ fmtDuration(row.durationMs) }}</td>
+          <td>{{ row.spanCount }}</td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="emptymessage">
+        <tr><td colspan="4" class="hint">No transactions for this service in the current data.</td></tr>
+      </ng-template>
+    </p-table>
+  </div>
+
+  <div class="panel-detail">
+    <p class="hint" *ngIf="!activeTraceId">Select a transaction to see its span waterfall. Click any span for method call info.</p>
+    <ng-container *ngIf="activeTraceId">
+      <h3>{{ activeTraceId }}</h3>
+      <div class="span-row" *ngFor="let span of spans" (click)="openMci(span)">
+        <div class="meta">
+          <span>{{ span.name }} <em>({{ span.service }})</em></span>
+          <span>{{ fmtDuration(span.durationMs) }}</span>
+        </div>
+        <div class="bar-track">
+          <div class="bar" [class.error]="span.status?.code === 'Error'" [style.left.%]="barLeft(span)" [style.width.%]="barWidth(span)"></div>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</div>
+
+<app-mci-dialog [span]="mciSpan" [traceId]="mciTraceId" (closed)="closeMci()"></app-mci-dialog>

@@ -1,0 +1,25 @@
+<p-table [value]="queries" [loading]="loading">
+  <ng-template pTemplate="header">
+    <tr>
+      <th>Query</th>
+      <th>DB</th>
+      <th>Count</th>
+      <th>Min</th>
+      <th>Max</th>
+      <th>Avg</th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-row>
+    <tr>
+      <td>{{ row.query }}</td>
+      <td>{{ row.dbSystem }}</td>
+      <td>{{ row.count }}</td>
+      <td>{{ fmtDuration(row.minMs) }}</td>
+      <td>{{ fmtDuration(row.maxMs) }}</td>
+      <td>{{ fmtDuration(row.avgMs) }}</td>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="emptymessage">
+    <tr><td colspan="6" class="hint">No DB spans found for this service.</td></tr>
+  </ng-template>
+</p-table>

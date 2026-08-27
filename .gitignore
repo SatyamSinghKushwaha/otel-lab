@@ -1,0 +1,8 @@
+node_modules/
+npm-debug.log
+.DS_Store
+dist/
+.angular/
+
+# downloaded binary agent artifacts -- fetch fresh instead of committing large jars
+agents/java/*.jar

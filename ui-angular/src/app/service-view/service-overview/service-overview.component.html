@@ -1,0 +1,39 @@
+<div class="flex align-items-center gap-3 mb-3">
+  <label class="hint">Window
+    <p-dropdown
+      [options]="windowOptions"
+      [(ngModel)]="windowMinutes"
+      (onChange)="load()"
+      styleClass="ml-2"
+    ></p-dropdown>
+  </label>
+  <span class="hint">Click a service to drill in.</span>
+</div>
+
+<p-table [value]="services" [loading]="loading" [rowHover]="true" dataKey="service">
+  <ng-template pTemplate="header">
+    <tr>
+      <th>Service</th>
+      <th>Requests</th>
+      <th>Req/min</th>
+      <th>Error rate</th>
+      <th>p50</th>
+      <th>p95</th>
+      <th>p99</th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-row>
+    <tr (click)="openService(row.service)">
+      <td>{{ row.service }}</td>
+      <td>{{ row.requestCount }}</td>
+      <td>{{ row.requestsPerMin }}</td>
+      <td [class.severity-ERROR]="row.errorRate > 0">{{ fmtPct(row.errorRate) }}</td>
+      <td>{{ fmtDuration(row.p50Ms) }}</td>
+      <td>{{ fmtDuration(row.p95Ms) }}</td>
+      <td>{{ fmtDuration(row.p99Ms) }}</td>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="emptymessage">
+    <tr><td colspan="7" class="hint">No traces in this window.</td></tr>
+  </ng-template>
+</p-table>

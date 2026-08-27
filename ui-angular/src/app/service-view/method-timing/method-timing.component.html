@@ -1,0 +1,21 @@
+<p-table [value]="methods" [loading]="loading">
+  <ng-template pTemplate="header">
+    <tr>
+      <th>Method</th>
+      <th>Count</th>
+      <th>Avg self time</th>
+      <th>% of total</th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-row>
+    <tr>
+      <td>{{ row.name }}</td>
+      <td>{{ row.count }}</td>
+      <td>{{ fmtDuration(row.avgSelfTimeMs) }}</td>
+      <td>{{ fmtPct(row.percentOfTotal) }}</td>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="emptymessage">
+    <tr><td colspan="4" class="hint">No data.</td></tr>
+  </ng-template>
+</p-table>

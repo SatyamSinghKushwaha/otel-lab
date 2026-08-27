@@ -1,0 +1,25 @@
+.back-link {
+  color: #9aa2ad;
+  text-decoration: none;
+  font-size: 13px;
+}
+
+.subtabs {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 16px;
+  border-bottom: 1px solid #2a2e37;
+
+  a {
+    padding: 8px 12px;
+    color: #9aa2ad;
+    text-decoration: none;
+    border-bottom: 2px solid transparent;
+    font-size: 13px;
+
+    &.active {
+      color: #e6e8eb;
+      border-bottom-color: var(--accent);
+    }
+  }
+}

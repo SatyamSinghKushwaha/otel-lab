@@ -1,0 +1,42 @@
+receivers:
+  otlp:
+    protocols:
+      grpc:
+        endpoint: 0.0.0.0:4317
+      http:
+        endpoint: 0.0.0.0:4318
+
+processors:
+  batch:
+    timeout: 2s
+    send_batch_size: 1000
+
+exporters:
+  debug:
+    verbosity: basic
+
+  # Dynamic index routing (traces-generic.otel-default / logs-generic.otel-default /
+  # metrics-generic.otel-default data streams) is the exporter's default behavior as of
+  # this collector version -- no index name config needed.
+  elasticsearch:
+    endpoints: ["http://elasticsearch:9200"]
+
+extensions:
+  health_check:
+    endpoint: 0.0.0.0:13133
+
+service:
+  extensions: [health_check]
+  pipelines:
+    traces:
+      receivers: [otlp]
+      processors: [batch]
+      exporters: [elasticsearch, debug]
+    metrics:
+      receivers: [otlp]
+      processors: [batch]
+      exporters: [elasticsearch, debug]
+    logs:
+      receivers: [otlp]
+      processors: [batch]
+      exporters: [elasticsearch, debug]

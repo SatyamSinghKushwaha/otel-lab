@@ -1,0 +1,57 @@
+.panel-split {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+}
+
+.panel-list {
+  flex: 1;
+  min-width: 0;
+}
+
+.panel-detail {
+  flex: 1;
+  min-width: 0;
+  background: #171a21;
+  border: 1px solid #2a2e37;
+  border-radius: 8px;
+  padding: 12px;
+  max-height: 70vh;
+  overflow: auto;
+}
+
+tr.active {
+  background: #171a21;
+}
+
+.span-row {
+  margin-bottom: 6px;
+  font-size: 12px;
+
+  .bar-track {
+    background: #0c0e12;
+    border-radius: 3px;
+    height: 16px;
+    position: relative;
+    margin-top: 2px;
+  }
+
+  .bar {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    background: var(--accent);
+    border-radius: 3px;
+    min-width: 2px;
+
+    &.error {
+      background: var(--error);
+    }
+  }
+
+  .meta {
+    display: flex;
+    justify-content: space-between;
+    color: #9aa2ad;
+  }
+}

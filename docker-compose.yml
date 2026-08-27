@@ -1,0 +1,56 @@
+services:
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.17.4
+    container_name: otel-lab-elasticsearch
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+      - xpack.security.http.ssl.enabled=false
+      - xpack.security.transport.ssl.enabled=false
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    ports:
+      - "9200:9200"
+    volumes:
+      - es-data:/usr/share/elasticsearch/data
+    healthcheck:
+      test: ["CMD-SHELL", "curl -sf http://localhost:9200/_cluster/health || exit 1"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+
+  otel-collector:
+    image: otel/opentelemetry-collector-contrib:0.159.0
+    container_name: otel-lab-collector
+    command: ["--config=/etc/otel-collector-config.yaml"]
+    volumes:
+      - ./collector/otel-collector-config.yaml:/etc/otel-collector-config.yaml:ro
+    ports:
+      - "4317:4317" # OTLP gRPC
+      - "4318:4318" # OTLP HTTP
+      - "13133:13133" # health_check extension
+    depends_on:
+      elasticsearch:
+        condition: service_healthy
+
+  api:
+    build: ./api
+    container_name: otel-lab-api
+    environment:
+      - ES_URL=http://elasticsearch:9200
+      - PORT=3000
+    ports:
+      - "3000:3000" # direct API access, handy for curl/debugging
+    depends_on:
+      elasticsearch:
+        condition: service_healthy
+
+  ui-angular:
+    build: ./ui-angular
+    container_name: otel-lab-ui-angular
+    ports:
+      - "8080:80"
+    depends_on:
+      - api
+
+volumes:
+  es-data:

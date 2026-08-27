@@ -1,0 +1,14 @@
+<div class="flex align-items-center gap-3 mb-3">
+  <a routerLink="/service-view" class="back-link">&larr; All services</a>
+  <strong>{{ service }}</strong>
+</div>
+
+<nav class="subtabs">
+  <a [routerLink]="['flowpath']" routerLinkActive="active">Flowpath</a>
+  <a [routerLink]="['call-tree']" routerLinkActive="active">Call Tree</a>
+  <a [routerLink]="['method-timing']" routerLinkActive="active">Method Timing</a>
+  <a [routerLink]="['db-report']" routerLinkActive="active">DB Report</a>
+  <a [routerLink]="['service-map']" routerLinkActive="active">Service Map</a>
+</nav>
+
+<router-outlet></router-outlet>

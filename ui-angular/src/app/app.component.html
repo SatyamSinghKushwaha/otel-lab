@@ -1,0 +1,27 @@
+<header class="app-header">
+  <h1>OTel Lab</h1>
+  <div class="flex align-items-center gap-3">
+    <label class="hint">Service
+      <p-dropdown
+        [options]="services"
+        [ngModel]="serviceFilter.selected()"
+        (ngModelChange)="serviceFilter.selected.set($event)"
+        [showClear]="true"
+        placeholder="all"
+        appendTo="body"
+        styleClass="ml-2"
+      ></p-dropdown>
+    </label>
+  </div>
+</header>
+
+<nav class="app-nav">
+  <a routerLink="/service-view" routerLinkActive="active">Service View</a>
+  <a routerLink="/traces" routerLinkActive="active">Traces</a>
+  <a routerLink="/metrics" routerLinkActive="active">Metrics</a>
+  <a routerLink="/logs" routerLinkActive="active">Logs</a>
+</nav>
+
+<main>
+  <router-outlet></router-outlet>
+</main>

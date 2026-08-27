@@ -1,0 +1,41 @@
+@import "primeng/resources/themes/lara-dark-blue/theme.css";
+@import "primeng/resources/primeng.css";
+@import "primeicons/primeicons.css";
+@import "primeflex/primeflex.css";
+
+:root {
+  --accent: #5b9cff;
+  --error: #ff6b6b;
+  --warn: #e8b339;
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  background: #0f1115;
+  color: #e6e8eb;
+  font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+.hint {
+  color: #9aa2ad;
+  font-size: 13px;
+}
+
+.severity-ERROR,
+.severity-FATAL {
+  color: var(--error);
+}
+
+.severity-WARN {
+  color: var(--warn);
+}
+
+a {
+  color: var(--accent);
+}
+
+.p-datatable .p-datatable-tbody > tr {
+  cursor: pointer;
+}

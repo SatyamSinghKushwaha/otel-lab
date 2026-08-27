@@ -1,0 +1,28 @@
+<p class="hint" *ngIf="!traceId">Select a transaction from Flowpath first, then come back here to see its call tree.</p>
+
+<p-treeTable *ngIf="traceId" [value]="nodes" [loading]="loading">
+  <ng-template pTemplate="header">
+    <tr>
+      <th>Method</th>
+      <th>Service</th>
+      <th>Duration</th>
+      <th>Self time</th>
+      <th>Status</th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-rowNode let-rowData="rowData">
+    <tr>
+      <td>
+        <p-treeTableToggler [rowNode]="rowNode"></p-treeTableToggler>
+        {{ rowData.name }}
+      </td>
+      <td>{{ rowData.service }}</td>
+      <td>{{ fmtDuration(rowData.durationMs) }}</td>
+      <td>{{ fmtDuration(rowData.selfTimeMs) }}</td>
+      <td [class.severity-ERROR]="rowData.status?.code === 'Error'">{{ rowData.status?.code || 'Unset' }}</td>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="emptymessage">
+    <tr><td colspan="5" class="hint">No spans found for this trace.</td></tr>
+  </ng-template>
+</p-treeTable>

@@ -1,0 +1,31 @@
+<p-dialog header="Method Call Info" [visible]="visible" [modal]="true" [style]="{ width: '560px' }" (onHide)="onHide()" *ngIf="span">
+  <dl>
+    <dt>Service</dt><dd>{{ span.service }}</dd>
+    <dt>Span</dt><dd>{{ span.name }}</dd>
+    <dt>Kind</dt><dd>{{ span.kind }}</dd>
+    <dt>Start</dt><dd>{{ fmtTime(span.startTime) }}</dd>
+    <dt>Duration</dt><dd>{{ fmtDuration(span.durationMs) }}</dd>
+    <dt>Self time</dt><dd>{{ fmtDuration(span.selfTimeMs) }}</dd>
+    <dt>Status</dt><dd>{{ span.status?.code || 'Unset' }}<ng-container *ngIf="span.status?.message"> - {{ span.status?.message }}</ng-container></dd>
+  </dl>
+
+  <h4>Attributes</h4>
+  <dl *ngIf="attrEntries.length; else noAttrs">
+    <ng-container *ngFor="let entry of attrEntries">
+      <dt>{{ entry[0] }}</dt><dd>{{ entry[1] }}</dd>
+    </ng-container>
+  </dl>
+  <ng-template #noAttrs><p class="hint">none</p></ng-template>
+
+  <h4>Correlated logs</h4>
+  <div *ngIf="logs.length; else noLogs">
+    <div class="log-row" *ngFor="let log of logs">
+      <div class="meta">
+        <span [class]="'severity-' + log.severity">{{ log.severity }}</span>
+        <span>{{ fmtTime(log.timestamp) }}</span>
+      </div>
+      {{ log.body }}
+    </div>
+  </div>
+  <ng-template #noLogs><p class="hint">none</p></ng-template>
+</p-dialog>

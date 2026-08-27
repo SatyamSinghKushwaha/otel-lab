@@ -1,0 +1,31 @@
+:host ::ng-deep {
+  dl {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 4px 12px;
+    margin: 0 0 12px;
+    font-size: 13px;
+  }
+
+  dt {
+    color: #9aa2ad;
+  }
+
+  h4 {
+    margin: 0 0 6px;
+    font-size: 12px;
+    color: #9aa2ad;
+    text-transform: uppercase;
+  }
+
+  .log-row {
+    font-size: 12px;
+    margin-bottom: 6px;
+
+    .meta {
+      display: flex;
+      justify-content: space-between;
+      color: #9aa2ad;
+    }
+  }
+}
