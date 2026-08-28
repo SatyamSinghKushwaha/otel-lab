@@ -4,12 +4,21 @@ import { FormsModule } from '@angular/forms';
 import { DropdownModule } from 'primeng/dropdown';
 import { ButtonModule } from 'primeng/button';
 import { ApiService } from './core/api.service';
+import { GlobalTimebarComponent } from './core/global-timebar.component';
 import { ServiceFilterService } from './core/service-filter.service';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, RouterLink, RouterLinkActive, FormsModule, DropdownModule, ButtonModule],
+  imports: [
+    RouterOutlet,
+    RouterLink,
+    RouterLinkActive,
+    FormsModule,
+    DropdownModule,
+    ButtonModule,
+    GlobalTimebarComponent,
+  ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })

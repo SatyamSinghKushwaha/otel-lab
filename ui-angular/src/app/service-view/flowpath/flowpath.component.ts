@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { TableModule } from 'primeng/table';
 import { ApiService } from '../../core/api.service';
+import { TimeService } from '../../core/time.service';
 import { Span, TraceSummary } from '../../core/models';
 import { fmtDuration, fmtTime } from '../../core/format.util';
 import { DrilldownStateService } from '../service-drilldown/drilldown-state.service';
@@ -32,15 +33,26 @@ export class FlowpathComponent implements OnInit {
     private api: ApiService,
     private route: ActivatedRoute,
     public drilldown: DrilldownStateService,
+    private time: TimeService,
   ) {}
+
+
+  ngOnDestroy(): void {
+    if (this.timeSub) this.timeSub.unsubscribe?.();
+  }
 
   ngOnInit(): void {
     this.service = this.route.parent?.snapshot.paramMap.get('service') || '';
-    this.api.getTraces(this.service).subscribe((traces) => {
-      this.traces = traces;
-      this.loading = false;
+    this.timeSub = this.time.getWindow$().subscribe((minutes) => {
+      this.loading = true;
+      this.api.getTraces(this.service, 50, minutes).subscribe((traces) => {
+        this.traces = traces;
+        this.loading = false;
+      });
     });
   }
+
+  timeSub: any;
 
   selectTrace(traceId: string): void {
     this.activeTraceId = traceId;

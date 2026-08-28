@@ -1,7 +1,8 @@
 import { Routes } from '@angular/router';
 
 export const routes: Routes = [
-  { path: '', redirectTo: 'service-view', pathMatch: 'full' },
+  { path: '', redirectTo: 'landing', pathMatch: 'full' },
+  { path: 'landing', loadComponent: () => import('./landing/landing.component').then(m => m.LandingComponent) },
   {
     path: 'service-view',
     loadComponent: () =>

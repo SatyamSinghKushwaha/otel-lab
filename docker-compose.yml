@@ -33,11 +33,11 @@ services:
         condition: service_healthy
 
   api:
-    build: ./api
+    build: ./api-java
     container_name: otel-lab-api
     environment:
       - ES_URL=http://elasticsearch:9200
-      - PORT=3000
+      - SERVER_PORT=3000
     ports:
       - "3000:3000" # direct API access, handy for curl/debugging
     depends_on:
